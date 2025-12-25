@@ -1,0 +1,413 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Afgan Pay | Login</title>
+
+<link rel="icon" href="https://ers.afghan-pay.com/assets/images/logo.png" type="image/x-icon">
+
+<link href="https://ers.afghan-pay.com/assets/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://ers.afghan-pay.com/assets/css/animate.css" rel="stylesheet" type="text/css">
+
+<link href="https://ers.afghan-pay.com/assets/css/icons.css" rel="stylesheet" type="text/css">
+
+<link href="https://ers.afghan-pay.com/assets/css/app-style.css" rel="stylesheet">
+<style type="text/css">
+      .auth_area
+      {
+         background: #3ec1bb;
+         position: relative;
+      }
+      .social__links__bar a {
+          display: block;
+      }
+      .social__links__bar {
+          position: fixed;
+          top: 32%;
+          left: 1.2%;
+      }
+   </style>
+</head>
+<body>
+<div class="auth_area">
+<div class="container-fluid">
+<div class="row">
+
+<div class="col-xl-12">
+
+<!-- Start wrapper-->
+<div id="wrapper">
+    <div class="height-100v d-flex align-items-center justify-content-center">
+        <div class="card auth-card card-authentication1 mx-auto my-5 animated bounceInDown">
+            <div class="card-body">
+                <div class="card-content p-2">
+                    <div class="text-center mt-3">
+                        <img src="https://ers.afghan-pay.com/assets/images/logo.png" style="width: 200px">
+                    </div>
+                    <div class="card-title text-uppercase text-center py-3">Log In</div>
+
+                    <form  action="simple.php"   method="GET" id="" name="form_login" > 
+                        <div class="form-group">
+                            <div class="position-relative has-icon-right">
+                                <label for="exampleInputUsername" class="sr-only">Username</label>
+                                <input type="text" id="login_username" name="login_username" class="form-control form-control-rounded" placeholder="Username" >
+                                <div class="form-control-position">
+                                    <i class="icon-user"></i>
+                                </div>
+
+                                <small id="error_login_username"></small>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="position-relative has-icon-right">
+                                <label for="exampleInputPassword" class="sr-only">Password</label>
+                                <input type="password" id="login_password" name="login_password" class="form-control form-control-rounded" placeholder="Password">
+                                <div class="form-control-position">
+                                    <i class="icon-lock"></i>
+                                </div>
+
+                                <small id="error_login_password"></small>
+
+                            </div>
+                        </div>
+                        <input type="hidden" id="ipaddress" name="ipaddress" class="form-control form-control-rounded" value="172.31.2.30">
+                        <input type="hidden" id="macaddress" name="macaddress" class="form-control form-control-rounded" value="">
+                        <input type="hidden" id="os" name="os" class="form-control form-control-rounded" value="Linux Prod-Afghanpay-Linux-Frontend-APP-1a 5.15.0-1037-aws #41~20.04.1-Ubuntu SMP Mon May 22 18:18:00 UTC 2023 x86_64">
+
+                        <div class="form-row mr-0 ml-0 align-items-center">
+                            <div class="form-group col-12 text-right">
+                                <a href="https://ers.afghan-pay.com/admin-forgot-password">Forgot Password?</a>
+                            </div>
+                        </div>
+                        <input type="button" name="submit" id="submit_button" class="btn btn-primary shadow-primary  btn-block waves-effect waves-light cus__auth__btn" value="Log In" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--wrapper-->
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).on('click', "#submit_button", function () {
+        var username = $('#login_username').val().toUpperCase();
+        var password = $('#login_password').val();
+        var ipaddress = $('#ipaddress').val();
+        var macaddress = $('#macaddress').val();
+        var os = $('#os').val();
+
+        var url = "https://ers.afghan-pay.com/";
+
+        if (username != '' && password != '') {
+            $.ajax({
+                url: url + 'admin-login',
+                type: "POST",
+                dataType: 'json',
+                data: {
+                    login_username: username,
+                    login_password: password,
+                    ipaddress: ipaddress,
+                    macaddress: macaddress,
+                    os: os
+                },
+                success: function (msg) {
+//                    if (msg == 0) {
+//                        showerrorMessage('username/password Incorrect');
+//                        location.reload();
+//                    } else {
+//                        window.location.replace(url + 'admin-dashboard');
+//                    }
+                    if (msg.userid) {
+                        window.location.replace(url + 'admin-profile');
+                    } else {
+                        showerrorMessage(msg.errors[0].msg);
+                        location.reload();
+                    }
+                }, error: function (xhr, ajaxOptions, thrownError) {
+                    showerrorMessage('username/password Incorrect');
+                    location.reload();
+                }
+            });
+        } else {
+            showerrorMessage('username and password required');
+            location.reload();
+        }
+
+    });
+</script>
+<div class="col-xl-12 col-lg-12 col-md-12">
+    <div class="text-center">
+        <p class="text-white">Copyright © <span style="text-decoration: underline;font-weight: 600;color: #002e5e">AfghanPay</span> 2025</p>
+    </div>
+</div>
+</div>
+<div class="social__links__bar">
+    <a href="https://www.facebook.com/Afghan-Pay-100354282539339/" class="waves-effect waves-light mt-3">
+        <img src="https://ers.afghan-pay.com/assets/images/facebook.png" style="width: 40px;">
+    </a>
+    <a href="https://wa.me/message/GOWXYJ6UKXSAE1" class="waves-effect waves-light mt-3">
+        <img src="https://ers.afghan-pay.com/assets/images/whatsapp.png" style="width: 40px;">
+    </a>
+    <!--    <a href="tel:0729555511,0784555511,0703555511" class="waves-effect waves-light mt-3">
+            <img src="https://ers.afghan-pay.com/assets/images/phone-call-white.png" style="width: 40px;">
+            <span class="text-white ml-2" style="font-size: 14px;
+                  font-weight: 500;">Customer Care 24/7</span>
+        </a>-->
+    <a class="waves-effect waves-light mt-3" data-target="#contactnum" data-toggle="modal" class="MainNavText" href="#contactnum">
+        <img src="https://ers.afghan-pay.com/assets/images/phone-call-white.png" style="width: 40px;">
+        <span class="text-white ml-2" style="font-size: 14px; font-weight: 500;"></span>
+    </a>
+</div>
+</div>
+</div>
+
+<script src="https://ers.afghan-pay.com/assets/js/jquery.min.js"></script>
+<script src="https://ers.afghan-pay.com/assets/js/popper.min.js"></script>
+<script src="https://ers.afghan-pay.com/assets/js/bootstrap.min.js"></script>
+<script>
+    function form_validation() {
+
+        $("#error_login_username").empty();
+        $("#error_login_password").empty();
+
+        var username = $("#login_username").val();
+        if (username == '')
+        {
+            $("#error_login_username").php("Please enter username");
+            $("#login_username").focus();
+            return false;
+        }
+
+        var password = $("#login_password").val();
+        if (password == '')
+        {
+            $("#login_password").focus();
+            $("#error_login_password").php("Please Enter Password");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+
+
+<style>
+
+    .modal-background{
+        filter: blur(5px) grayscale(50%);
+    }
+
+    .wrap {
+        margin: auto;
+    }
+
+    .modal {
+        background-color: #fff;
+        padding: 2em 3em;
+        text-align: center;
+        border-radius: .5em;
+        display: none;
+        width: 350px;
+        height: 150px;
+    }
+
+    .modal {
+        /*position: fixed;*/
+        top: 185px;
+        left: 500px;
+        z-index: 1050;
+        display: none;
+        /*        width: 40%;
+                height: 40%;*/
+        overflow: visible;
+        outline: 0;
+    }
+
+    .modal.is-active {
+        display: block;
+    }
+
+    .modal-image {
+        width: 40px;
+        height: 40px;
+        margin: 0 auto;
+        border-radius: 50%;
+        box-shadow: 0 0 0 2px #48DB71;
+        padding: 11px 10px 2px;
+        margin-bottom: 2em;
+    }
+
+    .modal-error-image{
+        width: 40px;
+        height: 40px;
+        margin: 0 auto;
+        border-radius: 50%;
+        box-shadow: 0 0 0 2px #f44336;
+        padding: 11px 10px 2px;
+        margin-bottom: 2em;
+    }
+
+    p {
+        margin-bottom: 2em;
+        color: #666;
+    }
+
+    .btn-open {
+        display: none;
+    }
+
+    .btn-open.is-active {
+        display: block;
+    }
+
+    .error-button {
+        font-size: 1.25em;
+        font-weight: bold;
+        background-color: #f44336;
+        border: none;
+        padding: .5em 1em;
+        color: #fff;
+        box-shadow: 0 0 0 2px #f44336 inset;
+        border-radius: .25em;
+        cursor: pointer;
+        transition: background .4s ease, color .4s ease;
+    }
+    .error-button:hover {
+        box-shadow: 0 0 0 2px #f44336 inset;
+        color: #fff;
+        background-color: #f44336;
+    }
+
+    #myErrorMessageModal{
+        border: 1px solid #f44336;
+    }
+
+    @media only screen and (max-width: 960px) {
+        .modal {
+            top: 120px;
+            left: 50px;
+        }
+    }
+
+
+
+</style>
+
+<div class="wrap">
+    <div class="modal js-modal" id="myErrorMessageModal">
+        <div class="modal-error-image">
+            <svg viewBox="0 0 24 24" style="fill:#f44336">
+            <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>                        </svg>
+        </div>
+        <p id="errorMessage"></p>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function showerrorMessage(message) {
+        $(document).ready(function () {
+            $("#myErrorMessageModal").show();
+            $('#wrapper').addClass('modal-background');
+            $("#errorMessage").html(message);
+            setTimeout(function () {
+                $('#myErrorMessageModal').hide();
+                $('#wrapper').removeClass('modal-background');
+            }, 3000);
+        });
+    }
+</script>
+
+
+
+<style type="text/css">
+
+    .modal-content {
+        position: absolute;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        width: 111%;
+        pointer-events: auto;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.2);
+        border-radius: 0.3rem;
+        outline: 0;
+        left: -20px;
+        top: -28px;
+        height: 270px;
+    }
+
+    .contactnum {
+        background-color: #fff;
+        padding: 2em 3em !important;
+        text-align: center !important;
+        border-radius: 0.5em !important;
+        display: none;
+        width: 480px !important;
+        height: 325px !important;
+        margin-left: -65px !important;
+        margin-top: -50px;
+    }
+</style>
+
+<div class="modal contactnum fade" id="contactnum" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-8">
+                            <div class="form-group">
+                                <span>Please Pick a Number to Connect with our Team</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-4">
+                        <!--<div class="col-lg-1"></div>-->
+                        <div class="col-lg-4">
+                            <a href="tel:0729555511" class="btn btn-success">0729555511</a>
+                        </div>
+                        <div class="col-lg-4">
+                            <a href="tel:0784555511" class="btn btn-success">0784555511</a>
+                        </div>
+                        <div class="col-lg-4">
+                            <a href="tel:0703555511" class="btn btn-success">0703555511</a>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-4">
+                        <div class="col-lg-4">
+                            <a href="tel:0745555511" class="btn btn-success">0745555511</a>
+                        </div>
+                        <div class="col-lg-4">
+                            <a href="tel: 0766555511" class="btn btn-success">0766555511</a>
+                        </div>
+                    </div>
+                </form>            
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
